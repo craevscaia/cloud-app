@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-app
+spec:
+  template:
+    spec:
+      containers:
+        - name: cloud-app
+          image: registry.digitalocean.com/cloud-lab/cloud-app:latest
+          imagePullPolicy: Always

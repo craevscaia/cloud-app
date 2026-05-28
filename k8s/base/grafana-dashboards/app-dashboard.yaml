@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-app-dashboard
+  labels:
+    grafana_dashboard: "1"
+data:
+  app-dashboard.json: |
+    {
+      "title": "Cloud App",
+      "schemaVersion": 38,
+      "panels": [
+        {
+          "type": "timeseries",
+          "title": "HTTP requests/sec",
+          "targets": [
+            {
+              "expr": "sum(rate(http_server_requests_seconds_count{job=\"cloud-app\"}[1m])) by (method, status)",
+              "legendFormat": "{{method}} {{status}}"
+            }
+          ],
+          "gridPos": {"x":0,"y":0,"w":24,"h":8}
+        },
+        {
+          "type": "timeseries",
+          "title": "JVM heap used",
+          "targets": [
+            {
+              "expr": "jvm_memory_used_bytes{area=\"heap\",job=\"cloud-app\"}",
+              "legendFormat": "{{id}}"
+            }
+          ],
+          "gridPos": {"x":0,"y":8,"w":24,"h":8}
+        }
+      ]
+    }

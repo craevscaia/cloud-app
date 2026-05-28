@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-app-logs-dashboard
+  labels:
+    grafana_dashboard: "1"
+data:
+  logs-dashboard.json: |
+    {
+      "title": "Cloud App Logs",
+      "schemaVersion": 38,
+      "panels": [
+        {
+          "type": "logs",
+          "title": "App logs (Loki)",
+          "datasource": {"type":"loki","uid":"loki"},
+          "targets": [
+            {
+              "expr": "{app_kubernetes_io_name=\"cloud-app\"}"
+            }
+          ],
+          "gridPos": {"x":0,"y":0,"w":24,"h":16}
+        }
+      ]
+    }
